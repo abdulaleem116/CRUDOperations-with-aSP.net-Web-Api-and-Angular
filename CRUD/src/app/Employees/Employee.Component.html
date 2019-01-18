@@ -1,0 +1,111 @@
+﻿
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-3">
+
+        </div>
+        <div class="col-sm-6">
+            <h2>CRUD Operation with Angular 2</h2>
+        </div>
+        <div class="col-sm-3">
+
+        </div>
+   </div>
+    <br /><br />
+    <div class="row">
+        <div class="col-sm-7">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Employee ID</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  scope="row" *ngFor="let employee of EmployeeDetails">
+                        <td>{{employee.EmployeeID}}</td>
+                        <td>{{employee.FirstName}}</td>
+                        <td>{{employee.LastName}}</td>
+                        <td>{{employee.Email}}</td>
+                        <td>{{employee.DepartName}}</td>
+                        <td> <a href="javascript:void(0)" (click)="delete(employee.EmployeeID,employee.FirstName,employee.LastName)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                        <td> <a href="javascript:void(0)" (click)="edit(userForm,employee.EmployeeID)"><span class="glyphicon glyphicon-edit"></span></a></td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+         <div class="col-sm-5">
+             <form (ngSubmit)="submit(userForm)" #userForm="ngForm">
+                 <div class="form-group">
+                     <input type="hidden" class="form-control" name="EmployeeID" id="EmployeeID" ngModel required>
+                 </div>
+                 <div class="form-group">
+                     <label for="title">First Name</label>
+                     <input type="text" id="FirstName" class="form-control" name="FirstName" [(ngModel)]="FirstName" #firstName="ngModel" pattern="[a-zA-Z ]+" required="required" maxlength="15">
+                     <div *ngIf="firstName.errors && (firstName.dirty || firstName.touched)" class="alert alert-danger">
+                         <div [hidden]="!firstName.errors.required">
+                             First Name is required!
+                         </div>
+                         <div [hidden]="!firstName.errors.maxlength">
+                             Length must be less than 15!
+                         </div>
+                         <div [hidden]="!firstName.hasError('pattern')">
+                             Only alphabets are allowed!
+                         </div>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="author">Last Name</label>
+                     <input id="LastName" type="text" class="form-control" id="author" name="LastName" [(ngModel)]="LastName" #lastName="ngModel" pattern="[a-zA-Z ]+" required="required" maxlength="15">
+                     <div *ngIf="lastName.errors && (lastName.dirty || lastName.touched)" class="alert alert-danger">
+                         <div [hidden]="!lastName.errors.required">
+                             Last Name is required!
+                         </div>
+                         <div [hidden]="!lastName.errors.maxlength">
+                             Length must be less than 15!
+                         </div>
+                         <div [hidden]="!lastName.hasError('pattern')">
+                             Only alphabets are allowed!
+                         </div>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="url">Email</label>
+                     <input id="Email" type="text" class="form-control" name="Email" [(ngModel)]="Email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required="required">
+                     <div *ngIf="email.errors && (email.dirty || email.touched)" class="alert alert-danger">
+                         <div [hidden]="!email.errors.required">
+                             Email is required!
+                         </div>
+                         <div [hidden]="!email.hasError('pattern')">
+                             Email should consist of @ keywork
+                         </div>
+                     </div>
+                 </div>
+                 <div class="form-group">
+                     <label for="exampleFormControlSelect1">Select Depart</label>
+                     <select id="DepartRefID" class="form-control" name="DepartRefID" [(ngModel)]="DepartRefID" #depart="ngModel" required="required">
+                         <option *ngFor="let m of departs" value="{{m.DepartID}}">{{m.DepartName}}</option>
+                     </select>
+                     <div *ngIf="depart.errors && (depart.dirty || depart.touched)" class="alert alert-danger">
+                         <div [hidden]="!depart.errors.required">
+                             Depart must be selected.
+                         </div>
+                     </div>
+                 </div>
+                 <button id="checkOnSubmit" type="submit" class="btn btn-default">Submit</button>
+             </form>
+         </div>
+    </div>
+    
+</div>
+
+
+
